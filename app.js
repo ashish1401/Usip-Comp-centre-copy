@@ -45,8 +45,10 @@ db.once("open", () => {
 
 
 app.get("/home/:id", auth, async (req, res) => {
-  const id = req.params.id;
-  res.send(id);
+  const {id} = req.params;
+  const student = await Student.findById(id);
+
+  res.render('studentHome',{student});
 });
 
 app.get("/home", async (req, res) => {
