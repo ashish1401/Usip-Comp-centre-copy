@@ -11,7 +11,7 @@
   <div>
     <h1 class="text-center">Form</h1>
     <div>
-      <form action="/register" method="post">
+      <form action="/register/student" method="post">
         <div class="mb-3">
           <label for="roll_no" class="form-label">Roll Number</label>
           <input type="text" class="form-control" id="roll_no" name="student[roll_no]" value="" required>
@@ -35,7 +35,7 @@
         </div>
         <div class="mb-3">
           <label for="phone" class="form-label">Mobile Number</label>
-          <input type="number" class="form-control" id="phone" name="student[phone]" maxlength="10" value="<%=student.phone%>" required>
+          <input type="number" class="form-control" id="phone" name="student[phone]" maxlength="10" value="" required>
         </div>
         <div class="mb-3">
           <label for="phone2" class="form-label">Mobile Number (Secondary)</label>

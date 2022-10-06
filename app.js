@@ -7,7 +7,6 @@ const { auth } = require("./middleware/auth");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-//const { auth } = require("./middleware/jwtAuth");
 mongoose.connect("mongodb://localhost:27017/compCentre", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -45,26 +44,27 @@ db.once("open", () => {
 //*********************************************************************************************** */
 
 
-
-app.get("/home", async (req, res) => {
-  res.send("Hello");
-});
-
 app.get("/home/:id", auth, async (req, res) => {
   const id = req.params.id;
   res.send(id);
 });
 
+app.get("/home", async (req, res) => {
+  res.send("Hello");
+});
+
+
+
 app.get("/login/student", async (req, res) => {
   res.render('login');
 });
 
-app.get("/register", async (req, res) => {
+app.get("/register/student", async (req, res) => {
   res.render("register");
 });
 
 
-app.get('/edit/:id',async(req,res)=>{
+app.get('/edit/:id',auth,async(req,res)=>{
   const {id}=req.params;
   const student = await Student.findById(id);
 
@@ -72,36 +72,50 @@ app.get('/edit/:id',async(req,res)=>{
 
 })
 
+
+app.get('/', async (req,res)=>{
+  res.render('index');
+})
+
 //*********************************************************************************************** */
 //*********************************************************************************************** */
 
-app.post("/edit/:id", async (req, res) => {
+app.post("/edit/:id",auth,async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
-  const student = await Student.findByIdAndUpdate(id, { ...req.body.spot });
-
-  await spot.save();
+ // console.log(req.body);
+  const student = await Student.findByIdAndUpdate(id, { ...req.body.student });
+  await student.save();
 
   res.redirect(`/home`);
 });
 
-app.post('/login',async(req,res)=>{
-  const {roll_no,password}= req.body;
+app.post('/login/student',async(req,res)=>{
+const {roll_no,password}= req.body;
+  //console.log(req.body);
+
  const student = await Student.findOne({roll_no:roll_no.toLowerCase()});
+ //console.log(student);
+ 
  if(password==student.password){
-  res.redirect(`/home/${student._id}`);
+  //console.log("password matched");
+  const token = jwt.sign(
+    { _id: student._id },
+    "thisisasecretkeyhelloonetwothreefour"
+  );
+  res.cookie("token", token);
+
+  return res.redirect(`/home/${student._id}`);
  }
-  //console.log(student);
-  //const id = student._id;
   else{
-  res.redirect(`/login/student`);
+  return res.redirect(`/login/student`);
   }
 })
-app.post("/register", async (req, res) => {
+
+
+app.post("/register/student", async (req, res) => {
   //console.log(req.body);
   const student = new Student(req.body.student);
   student.roll_no = req.body.student.roll_no.toLowerCase();
-  console.log(student);
   await student.save();
    const id = student._id;
   res.redirect(`/home`);
