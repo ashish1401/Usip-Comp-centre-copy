@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 module.exports.auth = async (req,res,next)=>{
-    const {id}=req.params;
+    //console.log(req.params);
+    const { id }=req.params;
     const cookies = await req.cookies;
     //console.log(cookies);
     if(!cookies.token){
@@ -10,9 +11,13 @@ module.exports.auth = async (req,res,next)=>{
     }
     const response = await jwt.verify(cookies.token,"thisisasecretkeyhelloonetwothreefour");
     
+        //console.log(response._id);
+        //console.log(id);
+    
      if(response._id!=id){
         //req.flash("you do not have permission to do that")
-        return res.redirect('/home');
+        console.log("token not matched");
+        return res.redirect('/student/login');
      }
     next();
      
