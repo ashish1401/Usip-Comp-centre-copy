@@ -21,6 +21,6 @@ router.route('/home/:id').get(auth ,catchAsync(students.studentHomePage));
 router
   .route('/edit/:id')
   .get(auth , catchAsync(students.renderEditForm))
-  .post(auth,catchAsync(students.submitEditForm));
+  .post(auth ,catchAsync(students.submitEditForm));
 
 module.exports = router;
