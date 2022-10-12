@@ -7,7 +7,7 @@ module.exports.auth = async (req,res,next)=>{
     //console.log(cookies);
     if(!cookies.token){
         
-        return res.redirect('/login/student');
+        return res.redirect('/student/login');
     }
     const response = await jwt.verify(cookies.token,"thisisasecretkeyhelloonetwothreefour");
     

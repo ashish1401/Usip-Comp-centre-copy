@@ -70,6 +70,7 @@ module.exports.studentHomePage = async (req,res) =>{
     const { id } = req.params;
     // console.log(req.body);
      const student = await Student.findByIdAndUpdate(id, { ...req.body.student });
+     student.roll_no = req.body.student.roll_no.toLowerCase();
      await student.save();
    
      res.redirect(`/student/home/${id}`);

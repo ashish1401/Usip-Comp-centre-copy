@@ -8,8 +8,9 @@
   <title>Document</title>
 </head>
 <body>
+  <%- include('./partials/navbar')%>
   <div>
-    <h1 class="text-center">Form</h1>
+    <h1 class="text-center">Edit Form</h1>
     <div>
       <form action="/student/edit/<%=student._id%>" method="post">
         <div class="mb-3">
@@ -17,8 +18,8 @@
           <input type="text" class="form-control" id="roll_no" name="student[roll_no]" value="<%=student.roll_no %>" required>
         </div>
         <div class="mb-3">
-          <label for="Name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="Name" name="student[Name]" value="<%=student.name %>" required>
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" name="student[name]" value="<%=student.name %>" required>
         </div>
         <div class="mb-3">
           <label for="fatherName" class="form-label">Father's Name</label>
@@ -70,11 +71,7 @@
           <label for="tfees" class="form-label">Total Fees</label>
           <input type="number" class="form-control" id="tfees" name="student[tfees]" value="" required>
         </div> -->
-        <div class="mb-3">
-          <label for="dueFee" class="form-label">Fee Due</label>
-          <input type="number" class="form-control" id="dueFee" name="student[dueFee]" value="<%=student.dueFee %>" required>
-          <!-- <input type="text" class="form-control" id="dueFee" name="student[dueFee]" value="<%=student.dueFee %>" required> -->
-        </div>
+      
         <div class="mb-3">
           <label for="nationality" class="form-label">Nationality</label>
           <input type="text" class="form-control" id="nationality" name="student[nationality]" value="<%=student.nationality %>" required>
@@ -83,11 +80,11 @@
           <label for="Hostel" class="form-label">Hostel</label>
           <div class="col-sm-10">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="student[Hostel]" id="hostelyes" value="true" <%if(student.hostel){%>checked<%}%> >
+              <input class="form-check-input" type="radio" name="student[hostel]" id="hostelyes" value="true" <%if(student.hostel){%>checked<%}%> >
               <label class="form-check-label" for="hostel">Yes</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="student[Hostel]" id="hostelno" value="false" <%if(!student.hostel){%>checked<%}%> >
+              <input class="form-check-input" type="radio" name="student[hostel]" id="hostelno" value="false" <%if(!student.hostel){%>checked<%}%> >
               <label class="form-check-label" for="hostel">No</label>
             </div>
           </div>
